@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:54:56 by ubuntu            #+#    #+#             */
-/*   Updated: 2024/05/31 15:24:58 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/05/31 15:57:52 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,16 @@ char	*ft_realoc(char *src, int size)
 	i = 0;
 	dest = malloc(sizeof(char) * (size + 1));
 	if (!dest)
+	{
+		if (src)
+			free(src);
 		return (NULL);
+	}
+	if (!src)
+	{
+		dest[0] = '\0';
+		return (dest);
+	}
 	while (src[i])
 	{
 		dest[i] = src[i];
@@ -51,29 +60,30 @@ char	*ft_realoc(char *src, int size)
 
 char	*get_next_line(int fd)
 {
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	char	str[BUFFER_SIZE];
 	char	*dest;
 	int		size;
 	int		n_byte;
 	int		tot_size;
 
-	size = BUFFER_SIZE;
-	n_byte = read(fd, str, BUFFER_SIZE);
-	tot_size = n_byte;
-	dest = malloc(sizeof(char) * BUFFER_SIZE + 1);
-	dest[0] = '\0';
+	dest = NULL;
+	size = BUFFER_SIZE / 2;
+	n_byte = 1;
 	while (n_byte > 0)
 	{
-		if (tot_size > size)
+		n_byte = read(fd, str, BUFFER_SIZE);
+		tot_size = tot_size + n_byte;
+		if (tot_size > size || !dest)
 		{
 			size *= 2;
 			dest = ft_realoc(dest, size);
 			if (!dest)
 				return (NULL);
 		}
-		ft_strncat(dest, str, n_byte);
-		n_byte = read(fd, str, BUFFER_SIZE);
-		tot_size = tot_size + n_byte;
+		if (n_byte > 0)
+			ft_strncat(dest, str, n_byte);
 	}
 	return (dest);
 }

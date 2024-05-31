@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:52:13 by ubuntu            #+#    #+#             */
-/*   Updated: 2024/05/31 15:25:10 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/05/31 15:41:43 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
-#  define BUFFER_SIZE 100000
+#  define BUFFER_SIZE 100001
 
 char	*get_next_line(int fd);
 
