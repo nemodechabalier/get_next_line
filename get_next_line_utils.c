@@ -6,11 +6,21 @@
 /*   By: nde-chab <nde-chab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:38:30 by ubuntu            #+#    #+#             */
-/*   Updated: 2024/06/03 16:57:12 by nde-chab         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:13:10 by nde-chab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
 
 char	*ft_strjoin(char *s1, char *s2)
 {
@@ -26,7 +36,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		j++;
 	str = malloc(sizeof(char) * (i + j + 1));
 	if (!str)
-		return (NULL);
+		return (free(s1), NULL);
 	i = 0;
 	j = 0;
 	while (s1[i])
@@ -58,6 +68,8 @@ int	ft_str_return(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (1);
 	while (str[i])
 	{
 		if (str[i] == '\n')
@@ -68,3 +80,12 @@ int	ft_str_return(char *str)
 	return (0);
 }
 
+char	*ft_bzero(char *s, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+		s[i++] = 0;
+	return (s);
+}
