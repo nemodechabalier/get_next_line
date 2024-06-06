@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nde-chab <nde-chab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:52:15 by nde-chab          #+#    #+#             */
-/*   Updated: 2024/06/06 14:12:02 by nde-chab         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:11:59 by nde-chab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,19 +89,19 @@ char	*ft_creat_buffer(int fd, char *save)
 
 char	*get_next_line(int fd)
 {
-	static char	*save;
+	static char	*save[1024];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (save = NULL, NULL);
-	save = ft_creat_buffer(fd, save);
-	if (!save)
+		return (save[fd] = NULL, NULL);
+	save[fd] = ft_creat_buffer(fd, save[fd]);
+	if (!save[fd])
 		return (NULL);
-	line = ft_creat_line(save);
+	line = ft_creat_line(save[fd]);
 	if (!line)
-		return (save = NULL, NULL);
-	save = ft_creat_save(save);
-	if (!save)
+		return (save[fd] = NULL, NULL);
+	save[fd] = ft_creat_save(save[fd]);
+	if (!save[fd])
 		return (free(line), NULL);
 	return (line);
 }
