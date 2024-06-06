@@ -6,7 +6,7 @@
 /*   By: nde-chab <nde-chab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:52:15 by nde-chab          #+#    #+#             */
-/*   Updated: 2024/06/06 14:12:02 by nde-chab         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:24:43 by nde-chab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,12 @@ char	*get_next_line(int fd)
 	static char	*save;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		if (save)
+			free(save);
 		return (save = NULL, NULL);
+	}
 	save = ft_creat_buffer(fd, save);
 	if (!save)
 		return (NULL);
